@@ -53,6 +53,8 @@ const trend = Array.from({ length: 24 }, (_, i) => ({
 }));
 
 function Landing() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
   return (
     <div className="relative min-h-screen">
       <AnimatedBackground />
