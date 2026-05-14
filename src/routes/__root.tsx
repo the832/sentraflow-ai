@@ -72,14 +72,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "hakathon" },
+      { name: "description", content: "SentraFlow AI is a futuristic platform for smart city traffic intelligence." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "hakathon" },
+      { property: "og:description", content: "SentraFlow AI is a futuristic platform for smart city traffic intelligence." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "hakathon" },
+      { name: "twitter:description", content: "SentraFlow AI is a futuristic platform for smart city traffic intelligence." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/ea4c7413-1b49-4c9a-93b7-9761c7653f30/id-preview-bc8fcbad--baaea6cc-9dfd-40e4-ad83-c5ccee29caf8.lovable.app-1778792566393.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/ea4c7413-1b49-4c9a-93b7-9761c7653f30/id-preview-bc8fcbad--baaea6cc-9dfd-40e4-ad83-c5ccee29caf8.lovable.app-1778792566393.png" },
     ],
     links: [
       {
