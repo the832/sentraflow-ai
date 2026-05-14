@@ -9,38 +9,173 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as ConsoleRouteImport } from './routes/_console'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ConsoleSimulationRouteImport } from './routes/_console.simulation'
+import { Route as ConsoleSignalsRouteImport } from './routes/_console.signals'
+import { Route as ConsoleSettingsRouteImport } from './routes/_console.settings'
+import { Route as ConsolePredictionRouteImport } from './routes/_console.prediction'
+import { Route as ConsoleMonitoringRouteImport } from './routes/_console.monitoring'
+import { Route as ConsoleEmergencyRouteImport } from './routes/_console.emergency'
+import { Route as ConsoleDashboardRouteImport } from './routes/_console.dashboard'
+import { Route as ConsoleAnalyticsRouteImport } from './routes/_console.analytics'
 
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConsoleRoute = ConsoleRouteImport.update({
+  id: '/_console',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ConsoleSimulationRoute = ConsoleSimulationRouteImport.update({
+  id: '/simulation',
+  path: '/simulation',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleSignalsRoute = ConsoleSignalsRouteImport.update({
+  id: '/signals',
+  path: '/signals',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleSettingsRoute = ConsoleSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsolePredictionRoute = ConsolePredictionRouteImport.update({
+  id: '/prediction',
+  path: '/prediction',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleMonitoringRoute = ConsoleMonitoringRouteImport.update({
+  id: '/monitoring',
+  path: '/monitoring',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleEmergencyRoute = ConsoleEmergencyRouteImport.update({
+  id: '/emergency',
+  path: '/emergency',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleDashboardRoute = ConsoleDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleAnalyticsRoute = ConsoleAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => ConsoleRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
+  '/analytics': typeof ConsoleAnalyticsRoute
+  '/dashboard': typeof ConsoleDashboardRoute
+  '/emergency': typeof ConsoleEmergencyRoute
+  '/monitoring': typeof ConsoleMonitoringRoute
+  '/prediction': typeof ConsolePredictionRoute
+  '/settings': typeof ConsoleSettingsRoute
+  '/signals': typeof ConsoleSignalsRoute
+  '/simulation': typeof ConsoleSimulationRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
+  '/analytics': typeof ConsoleAnalyticsRoute
+  '/dashboard': typeof ConsoleDashboardRoute
+  '/emergency': typeof ConsoleEmergencyRoute
+  '/monitoring': typeof ConsoleMonitoringRoute
+  '/prediction': typeof ConsolePredictionRoute
+  '/settings': typeof ConsoleSettingsRoute
+  '/signals': typeof ConsoleSignalsRoute
+  '/simulation': typeof ConsoleSimulationRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_console': typeof ConsoleRouteWithChildren
+  '/contact': typeof ContactRoute
+  '/_console/analytics': typeof ConsoleAnalyticsRoute
+  '/_console/dashboard': typeof ConsoleDashboardRoute
+  '/_console/emergency': typeof ConsoleEmergencyRoute
+  '/_console/monitoring': typeof ConsoleMonitoringRoute
+  '/_console/prediction': typeof ConsolePredictionRoute
+  '/_console/settings': typeof ConsoleSettingsRoute
+  '/_console/signals': typeof ConsoleSignalsRoute
+  '/_console/simulation': typeof ConsoleSimulationRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/contact'
+    | '/analytics'
+    | '/dashboard'
+    | '/emergency'
+    | '/monitoring'
+    | '/prediction'
+    | '/settings'
+    | '/signals'
+    | '/simulation'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/contact'
+    | '/analytics'
+    | '/dashboard'
+    | '/emergency'
+    | '/monitoring'
+    | '/prediction'
+    | '/settings'
+    | '/signals'
+    | '/simulation'
+  id:
+    | '__root__'
+    | '/'
+    | '/_console'
+    | '/contact'
+    | '/_console/analytics'
+    | '/_console/dashboard'
+    | '/_console/emergency'
+    | '/_console/monitoring'
+    | '/_console/prediction'
+    | '/_console/settings'
+    | '/_console/signals'
+    | '/_console/simulation'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ConsoleRoute: typeof ConsoleRouteWithChildren
+  ContactRoute: typeof ContactRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_console': {
+      id: '/_console'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof ConsoleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,12 +183,105 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_console/simulation': {
+      id: '/_console/simulation'
+      path: '/simulation'
+      fullPath: '/simulation'
+      preLoaderRoute: typeof ConsoleSimulationRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/_console/signals': {
+      id: '/_console/signals'
+      path: '/signals'
+      fullPath: '/signals'
+      preLoaderRoute: typeof ConsoleSignalsRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/_console/settings': {
+      id: '/_console/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof ConsoleSettingsRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/_console/prediction': {
+      id: '/_console/prediction'
+      path: '/prediction'
+      fullPath: '/prediction'
+      preLoaderRoute: typeof ConsolePredictionRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/_console/monitoring': {
+      id: '/_console/monitoring'
+      path: '/monitoring'
+      fullPath: '/monitoring'
+      preLoaderRoute: typeof ConsoleMonitoringRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/_console/emergency': {
+      id: '/_console/emergency'
+      path: '/emergency'
+      fullPath: '/emergency'
+      preLoaderRoute: typeof ConsoleEmergencyRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/_console/dashboard': {
+      id: '/_console/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof ConsoleDashboardRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/_console/analytics': {
+      id: '/_console/analytics'
+      path: '/analytics'
+      fullPath: '/analytics'
+      preLoaderRoute: typeof ConsoleAnalyticsRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
   }
 }
 
+interface ConsoleRouteChildren {
+  ConsoleAnalyticsRoute: typeof ConsoleAnalyticsRoute
+  ConsoleDashboardRoute: typeof ConsoleDashboardRoute
+  ConsoleEmergencyRoute: typeof ConsoleEmergencyRoute
+  ConsoleMonitoringRoute: typeof ConsoleMonitoringRoute
+  ConsolePredictionRoute: typeof ConsolePredictionRoute
+  ConsoleSettingsRoute: typeof ConsoleSettingsRoute
+  ConsoleSignalsRoute: typeof ConsoleSignalsRoute
+  ConsoleSimulationRoute: typeof ConsoleSimulationRoute
+}
+
+const ConsoleRouteChildren: ConsoleRouteChildren = {
+  ConsoleAnalyticsRoute: ConsoleAnalyticsRoute,
+  ConsoleDashboardRoute: ConsoleDashboardRoute,
+  ConsoleEmergencyRoute: ConsoleEmergencyRoute,
+  ConsoleMonitoringRoute: ConsoleMonitoringRoute,
+  ConsolePredictionRoute: ConsolePredictionRoute,
+  ConsoleSettingsRoute: ConsoleSettingsRoute,
+  ConsoleSignalsRoute: ConsoleSignalsRoute,
+  ConsoleSimulationRoute: ConsoleSimulationRoute,
+}
+
+const ConsoleRouteWithChildren =
+  ConsoleRoute._addFileChildren(ConsoleRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ConsoleRoute: ConsoleRouteWithChildren,
+  ContactRoute: ContactRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
