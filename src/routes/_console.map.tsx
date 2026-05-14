@@ -1,5 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { SmartTrafficMap } from "@/components/SmartTrafficMap";
+import { lazy, Suspense, useEffect, useState } from "react";
+
+const SmartTrafficMap = lazy(() =>
+  import("@/components/SmartTrafficMap").then((m) => ({ default: m.SmartTrafficMap })),
+);
 
 export const Route = createFileRoute("/_console/map")({
   head: () => ({ meta: [{ title: "Smart Traffic Map · SentraFlow" }] }),
