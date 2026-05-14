@@ -1,6 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { Navbar } from "@/components/Navbar";
+
+const LiveLocationMap = lazy(() =>
+  import("@/components/LiveLocationMap").then((m) => ({ default: m.LiveLocationMap })),
+);
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { GlassCard } from "@/components/GlassCard";
 import { Button } from "@/components/ui/button";
