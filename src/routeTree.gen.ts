@@ -17,6 +17,7 @@ import { Route as ConsoleSignalsRouteImport } from './routes/_console.signals'
 import { Route as ConsoleSettingsRouteImport } from './routes/_console.settings'
 import { Route as ConsolePredictionRouteImport } from './routes/_console.prediction'
 import { Route as ConsoleMonitoringRouteImport } from './routes/_console.monitoring'
+import { Route as ConsoleMapRouteImport } from './routes/_console.map'
 import { Route as ConsoleEmergencyRouteImport } from './routes/_console.emergency'
 import { Route as ConsoleDashboardRouteImport } from './routes/_console.dashboard'
 import { Route as ConsoleAnalyticsRouteImport } from './routes/_console.analytics'
@@ -60,6 +61,11 @@ const ConsoleMonitoringRoute = ConsoleMonitoringRouteImport.update({
   path: '/monitoring',
   getParentRoute: () => ConsoleRoute,
 } as any)
+const ConsoleMapRoute = ConsoleMapRouteImport.update({
+  id: '/map',
+  path: '/map',
+  getParentRoute: () => ConsoleRoute,
+} as any)
 const ConsoleEmergencyRoute = ConsoleEmergencyRouteImport.update({
   id: '/emergency',
   path: '/emergency',
@@ -82,6 +88,7 @@ export interface FileRoutesByFullPath {
   '/analytics': typeof ConsoleAnalyticsRoute
   '/dashboard': typeof ConsoleDashboardRoute
   '/emergency': typeof ConsoleEmergencyRoute
+  '/map': typeof ConsoleMapRoute
   '/monitoring': typeof ConsoleMonitoringRoute
   '/prediction': typeof ConsolePredictionRoute
   '/settings': typeof ConsoleSettingsRoute
@@ -94,6 +101,7 @@ export interface FileRoutesByTo {
   '/analytics': typeof ConsoleAnalyticsRoute
   '/dashboard': typeof ConsoleDashboardRoute
   '/emergency': typeof ConsoleEmergencyRoute
+  '/map': typeof ConsoleMapRoute
   '/monitoring': typeof ConsoleMonitoringRoute
   '/prediction': typeof ConsolePredictionRoute
   '/settings': typeof ConsoleSettingsRoute
@@ -108,6 +116,7 @@ export interface FileRoutesById {
   '/_console/analytics': typeof ConsoleAnalyticsRoute
   '/_console/dashboard': typeof ConsoleDashboardRoute
   '/_console/emergency': typeof ConsoleEmergencyRoute
+  '/_console/map': typeof ConsoleMapRoute
   '/_console/monitoring': typeof ConsoleMonitoringRoute
   '/_console/prediction': typeof ConsolePredictionRoute
   '/_console/settings': typeof ConsoleSettingsRoute
@@ -122,6 +131,7 @@ export interface FileRouteTypes {
     | '/analytics'
     | '/dashboard'
     | '/emergency'
+    | '/map'
     | '/monitoring'
     | '/prediction'
     | '/settings'
@@ -134,6 +144,7 @@ export interface FileRouteTypes {
     | '/analytics'
     | '/dashboard'
     | '/emergency'
+    | '/map'
     | '/monitoring'
     | '/prediction'
     | '/settings'
@@ -147,6 +158,7 @@ export interface FileRouteTypes {
     | '/_console/analytics'
     | '/_console/dashboard'
     | '/_console/emergency'
+    | '/_console/map'
     | '/_console/monitoring'
     | '/_console/prediction'
     | '/_console/settings'
@@ -218,6 +230,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConsoleMonitoringRouteImport
       parentRoute: typeof ConsoleRoute
     }
+    '/_console/map': {
+      id: '/_console/map'
+      path: '/map'
+      fullPath: '/map'
+      preLoaderRoute: typeof ConsoleMapRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
     '/_console/emergency': {
       id: '/_console/emergency'
       path: '/emergency'
@@ -246,6 +265,7 @@ interface ConsoleRouteChildren {
   ConsoleAnalyticsRoute: typeof ConsoleAnalyticsRoute
   ConsoleDashboardRoute: typeof ConsoleDashboardRoute
   ConsoleEmergencyRoute: typeof ConsoleEmergencyRoute
+  ConsoleMapRoute: typeof ConsoleMapRoute
   ConsoleMonitoringRoute: typeof ConsoleMonitoringRoute
   ConsolePredictionRoute: typeof ConsolePredictionRoute
   ConsoleSettingsRoute: typeof ConsoleSettingsRoute
@@ -257,6 +277,7 @@ const ConsoleRouteChildren: ConsoleRouteChildren = {
   ConsoleAnalyticsRoute: ConsoleAnalyticsRoute,
   ConsoleDashboardRoute: ConsoleDashboardRoute,
   ConsoleEmergencyRoute: ConsoleEmergencyRoute,
+  ConsoleMapRoute: ConsoleMapRoute,
   ConsoleMonitoringRoute: ConsoleMonitoringRoute,
   ConsolePredictionRoute: ConsolePredictionRoute,
   ConsoleSettingsRoute: ConsoleSettingsRoute,
