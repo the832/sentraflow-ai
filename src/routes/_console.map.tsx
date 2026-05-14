@@ -11,6 +11,8 @@ export const Route = createFileRoute("/_console/map")({
 });
 
 function MapPage() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
   return (
     <div className="space-y-6">
       <header className="flex flex-wrap items-end justify-between gap-3">
@@ -20,7 +22,11 @@ function MapPage() {
           <p className="text-sm text-muted-foreground mt-1">Live heatmap · AI signal grid · emergency corridors</p>
         </div>
       </header>
-      <SmartTrafficMap />
+      {mounted && (
+        <Suspense fallback={<div className="h-[520px] glass holo-border rounded-xl flex items-center justify-center text-neon text-xs uppercase tracking-[0.3em]">Loading Grid…</div>}>
+          <SmartTrafficMap />
+        </Suspense>
+      )}
     </div>
   );
 }
