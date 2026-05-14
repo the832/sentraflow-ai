@@ -210,9 +210,33 @@ function Landing() {
           <div className="grid lg:grid-cols-3 gap-5">
             <GlassCard className="lg:col-span-2">
               <div className="flex items-center justify-between mb-3">
-                <div className="font-display text-lg">Live City Heatmap</div>
-                <div className="text-xs text-muted-foreground font-mono">12 zones</div>
+                <div>
+                  <div className="font-display text-lg">Live City Heatmap</div>
+                  <div className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">Real-time density · Sector Grid</div>
+                </div>
+                <div className="flex items-center gap-2 text-xs font-mono text-lime-glow">
+                  <span className="pulse-dot" /> 12 ZONES LIVE
+                </div>
               </div>
+
+              {/* Overlay stat chips */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-3">
+                {[
+                  { l: "Congestion", v: "73%", c: "text-[var(--color-danger)]", dot: "var(--color-danger)" },
+                  { l: "Active Signals", v: "118", c: "text-primary", dot: "var(--color-cyan)" },
+                  { l: "Emergency", v: "2", c: "text-[var(--color-warning)]", dot: "var(--color-warning)" },
+                  { l: "Vehicles", v: "5,284", c: "text-lime-glow", dot: "var(--color-lime)" },
+                ].map((s) => (
+                  <div key={s.l} className="flex items-center gap-2 rounded-md border border-border bg-secondary/40 px-2.5 py-1.5">
+                    <span className="h-2 w-2 rounded-full animate-pulse" style={{ background: s.dot, boxShadow: `0 0 8px ${s.dot}` }} />
+                    <div className="flex-1 min-w-0">
+                      <div className="text-[9px] uppercase tracking-widest text-muted-foreground truncate">{s.l}</div>
+                      <div className={`font-display text-sm ${s.c}`}>{s.v}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
               <div className="relative h-64 rounded-lg overflow-hidden border border-border bg-background">
                 <div className="absolute inset-0 marquee-grid opacity-50" />
                 {Array.from({ length: 30 }).map((_, i) => {
@@ -221,13 +245,35 @@ function Landing() {
                   const s = (i % 3) + 1;
                   const c = i % 4 === 0 ? "var(--color-danger)" : i % 3 === 0 ? "var(--color-warning)" : "var(--color-lime)";
                   return (
-                    <span
+                    <motion.span
                       key={i}
-                      className="absolute rounded-full opacity-70 blur-md"
+                      className="absolute rounded-full blur-md"
                       style={{ left: `${x}%`, top: `${y}%`, width: s * 18, height: s * 18, background: c }}
+                      animate={{ opacity: [0.4, 0.85, 0.4], scale: [1, 1.15, 1] }}
+                      transition={{ duration: 2 + (i % 4) * 0.4, repeat: Infinity, delay: (i % 5) * 0.2 }}
                     />
                   );
                 })}
+
+                {/* Scanline */}
+                <motion.div
+                  className="absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent"
+                  animate={{ top: ["0%", "100%", "0%"] }}
+                  transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+                  style={{ boxShadow: "0 0 12px var(--color-cyan)" }}
+                />
+
+                {/* Legend */}
+                <div className="absolute bottom-2 left-2 flex items-center gap-3 rounded-md bg-background/70 backdrop-blur px-2.5 py-1 border border-border text-[10px] font-mono">
+                  <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full" style={{ background: "var(--color-lime)" }} /> Free</span>
+                  <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full" style={{ background: "var(--color-warning)" }} /> Moderate</span>
+                  <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full" style={{ background: "var(--color-danger)" }} /> Critical</span>
+                </div>
+
+                {/* Avg speed badge */}
+                <div className="absolute top-2 right-2 rounded-md bg-background/70 backdrop-blur px-2.5 py-1 border border-primary/40 text-[10px] font-mono text-primary">
+                  AVG · 42 km/h
+                </div>
               </div>
             </GlassCard>
             <GlassCard glow="lime">
