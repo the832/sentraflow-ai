@@ -1,6 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { Navbar } from "@/components/Navbar";
+
+const LiveLocationMap = lazy(() =>
+  import("@/components/LiveLocationMap").then((m) => ({ default: m.LiveLocationMap })),
+);
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { GlassCard } from "@/components/GlassCard";
 import { Button } from "@/components/ui/button";
@@ -48,6 +53,8 @@ const trend = Array.from({ length: 24 }, (_, i) => ({
 }));
 
 function Landing() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
   return (
     <div className="relative min-h-screen">
       <AnimatedBackground />
@@ -237,42 +244,19 @@ function Landing() {
                 ))}
               </div>
 
-              <div className="relative h-64 rounded-lg overflow-hidden border border-border bg-background">
-                <div className="absolute inset-0 marquee-grid opacity-50" />
-                {Array.from({ length: 30 }).map((_, i) => {
-                  const x = (i * 137) % 100;
-                  const y = (i * 53) % 100;
-                  const s = (i % 3) + 1;
-                  const c = i % 4 === 0 ? "var(--color-danger)" : i % 3 === 0 ? "var(--color-warning)" : "var(--color-lime)";
-                  return (
-                    <motion.span
-                      key={i}
-                      className="absolute rounded-full blur-md"
-                      style={{ left: `${x}%`, top: `${y}%`, width: s * 18, height: s * 18, background: c }}
-                      animate={{ opacity: [0.4, 0.85, 0.4], scale: [1, 1.15, 1] }}
-                      transition={{ duration: 2 + (i % 4) * 0.4, repeat: Infinity, delay: (i % 5) * 0.2 }}
-                    />
-                  );
-                })}
-
-                {/* Scanline */}
-                <motion.div
-                  className="absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent"
-                  animate={{ top: ["0%", "100%", "0%"] }}
-                  transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-                  style={{ boxShadow: "0 0 12px var(--color-cyan)" }}
-                />
+              <div className="relative h-72 rounded-lg overflow-hidden border border-border bg-background">
+                {mounted ? (
+                  <Suspense fallback={<div className="h-full w-full flex items-center justify-center text-neon text-[10px] uppercase tracking-[0.3em]">Loading Live Map…</div>}>
+                    <LiveLocationMap />
+                  </Suspense>
+                ) : (
+                  <div className="h-full w-full flex items-center justify-center text-muted-foreground text-[10px] uppercase tracking-[0.3em]">Initializing…</div>
+                )}
 
                 {/* Legend */}
-                <div className="absolute bottom-2 left-2 flex items-center gap-3 rounded-md bg-background/70 backdrop-blur px-2.5 py-1 border border-border text-[10px] font-mono">
-                  <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full" style={{ background: "var(--color-lime)" }} /> Free</span>
-                  <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full" style={{ background: "var(--color-warning)" }} /> Moderate</span>
-                  <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full" style={{ background: "var(--color-danger)" }} /> Critical</span>
-                </div>
-
-                {/* Avg speed badge */}
-                <div className="absolute top-2 right-2 rounded-md bg-background/70 backdrop-blur px-2.5 py-1 border border-primary/40 text-[10px] font-mono text-primary">
-                  AVG · 42 km/h
+                <div className="absolute bottom-2 left-2 z-[400] flex items-center gap-3 rounded-md bg-background/70 backdrop-blur px-2.5 py-1 border border-border text-[10px] font-mono">
+                  <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full" style={{ background: "var(--color-lime)" }} /> You</span>
+                  <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full" style={{ background: "var(--color-cyan)" }} /> Range</span>
                 </div>
               </div>
             </GlassCard>
