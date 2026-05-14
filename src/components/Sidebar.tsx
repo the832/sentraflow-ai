@@ -9,11 +9,13 @@ import {
   BarChart3,
   Siren,
   Settings,
+  Map as MapIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const items = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { to: "/map", label: "Traffic Map", icon: MapIcon },
   { to: "/monitoring", label: "Live Monitoring", icon: Activity },
   { to: "/prediction", label: "Traffic Prediction", icon: Brain },
   { to: "/signals", label: "Signal Control", icon: TrafficCone },
